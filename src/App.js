@@ -23,13 +23,15 @@ export default function App() {
 
 	async function handleLikeRepository(id) {
 		const response = await api.post(`repositories/${id}/like`);
-		const newRepositories = [...repositories];
-		const index = newRepositories.findIndex(
-			(repository) => repository.id === id
-		);
-		if (index >= 0) {
-			newRepositories[index] = response.data;
-			setRepositories(newRepositories);
+		if (response.status === 200) {
+			const newRepositories = [...repositories];
+			const index = newRepositories.findIndex(
+				(repository) => repository.id === id
+			);
+			if (index >= 0) {
+				newRepositories[index] = response.data;
+				setRepositories(newRepositories);
+			}
 		}
 	}
 
@@ -46,13 +48,13 @@ export default function App() {
 								{repository.title}
 							</Text>
 
-							<View style={styles.techsContainer}>
+							{/* <View style={styles.techsContainer}>
 								{repository.techs.map((tech) => (
 									<Text key={tech} style={styles.tech}>
 										{tech}
 									</Text>
 								))}
-							</View>
+							</View> */}
 
 							<View style={styles.likesContainer}>
 								<Text
